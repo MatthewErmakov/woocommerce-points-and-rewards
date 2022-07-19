@@ -755,7 +755,11 @@ class WC_Points_Rewards_Cart_Checkout {
 		$points_earned = WC_Points_Rewards_Manager::calculate_points_modification_from_coupons( $points_earned, $coupons );
 
 		$points_earned = WC_Points_Rewards_Manager::round_the_points( $points_earned );
-		return apply_filters( 'wc_points_rewards_points_earned_for_purchase', $points_earned, WC()->cart );
+
+		if(WC()->cart->get_totals()['discount_total'] == 0)
+			return apply_filters( 'wc_points_rewards_points_earned_for_purchase', $points_earned, WC()->cart );
+		else
+			return apply_filters( 'wc_points_rewards_points_earned_for_purchase', 0, WC()->cart );
 	}
 
 

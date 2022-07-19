@@ -100,7 +100,10 @@ class WC_Points_Rewards_Order {
 		}
 
 		// get points earned
-		$points = $this->get_points_earned_for_purchase( $order );
+		if($order->get_discount_total() == 0)
+			$points = $this->get_points_earned_for_purchase( $order );
+		else 
+			$points = 0;
 
 		// set order meta, regardless of whether any points were earned, just so we know the process took place
 		update_post_meta( $order_id, '_wc_points_earned', $points );
